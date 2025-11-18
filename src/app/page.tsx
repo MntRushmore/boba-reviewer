@@ -12,7 +12,7 @@ export interface Submission {
   name: string
   codeUrl: string
   playableUrl: string
-  status: 'Pending' | 'Approved' | 'Changes Requested'
+  status: 'Pending' | 'Approved' | 'Rejected'
   decisionReason?: string
   birthdate?: string
   screenshot?: string
@@ -59,20 +59,28 @@ export default function Home() {
 
   const handleStatusUpdate = async (id: string, status: string, reason: string) => {
     try {
+      console.log('Updating submission:', { id, status, reason })
+
       const res = await fetch('/api/submission/update-status', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, status, reason }),
       })
 
+      const data = await res.json()
+      console.log('Update response:', data)
+
       if (res.ok) {
+        console.log('Status updated successfully, refreshing submissions...')
         await fetchSubmissions()
         handleNext()
       } else {
-        console.error('Failed to update status:', await res.text())
+        console.error('Failed to update status:', data)
+        alert(`Failed to update status: ${data.error || 'Unknown error'}`)
       }
     } catch (error) {
       console.error('Failed to update status:', error)
+      alert('Failed to update status. Please check the console for details.')
     }
   }
 

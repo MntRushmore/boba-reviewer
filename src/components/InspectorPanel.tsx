@@ -20,20 +20,19 @@ export default function InspectorPanel({ submission, onStatusUpdate, onNext }: I
   }
 
   const handleApprove = () => {
-    if (!feedback.trim()) {
-      alert('Please provide feedback before approving')
-      return
-    }
-    onStatusUpdate(submission.id, 'Approved', feedback)
+    const confirmed = window.confirm('Are you sure you want to approve this submission?')
+    if (!confirmed) return
+
+    onStatusUpdate(submission.id, 'Approved', feedback || 'Approved')
     setFeedback('')
   }
 
-  const handleRequestChanges = () => {
+  const handleReject = () => {
     if (!feedback.trim()) {
-      alert('Please provide specific feedback for requested changes')
+      alert('Please provide specific feedback for rejection')
       return
     }
-    onStatusUpdate(submission.id, 'Changes Requested', feedback)
+    onStatusUpdate(submission.id, 'Rejected', feedback)
     setFeedback('')
   }
 
@@ -81,8 +80,8 @@ export default function InspectorPanel({ submission, onStatusUpdate, onNext }: I
           <button onClick={handleApprove} className="btn-primary flex-1">
             Approve
           </button>
-          <button onClick={handleRequestChanges} className="btn-secondary flex-1">
-            Request Changes
+          <button onClick={handleReject} className="btn-secondary flex-1">
+            Reject
           </button>
           <button onClick={onNext} className="btn-secondary px-6">
             Next

@@ -12,7 +12,7 @@ export default function SubmissionCard({ submission, isSelected, onSelect }: Sub
   const statusStyles = {
     Pending: 'bg-yellow-50 text-yellow-700 border-yellow-200',
     Approved: 'bg-green-50 text-green-700 border-green-200',
-    'Changes Requested': 'bg-red-50 text-red-700 border-red-200',
+    Rejected: 'bg-red-50 text-red-700 border-red-200',
   }
 
   return (
