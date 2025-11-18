@@ -92,7 +92,7 @@ export async function getSubmissions(viewName?: string) {
       codeUrl: record.get('Code URL'),
       playableUrl: record.get('Playable URL'),
       status: record.get('Status'),
-      decisionReason: record.get('Decision Reason'),
+      decisionReason: record.get('Decision Reason (to email)'),
       birthdate: record.get('Birthdate'),
       screenshot: record.get('Screenshot')?.[0]?.url,
       eventCode: record.get('Event Code'),
@@ -115,7 +115,7 @@ export async function getSubmission(id: string) {
     codeUrl: record.get('Code URL'),
     playableUrl: record.get('Playable URL'),
     status: record.get('Status'),
-    decisionReason: record.get('Decision Reason'),
+    decisionReason: record.get('Decision Reason (to email)'),
     birthdate: record.get('Birthdate'),
     screenshot: record.get('Screenshot')?.[0]?.url,
     eventCode: record.get('Event Code'),
@@ -135,13 +135,13 @@ export async function updateSubmission(id: string, status: string, reason: strin
 
   const record = await base(tableName).update(id, {
     Status: status,
-    'Decision Reason': reason,
+    'Decision Reason (to email)': reason,
   })
 
   return {
     id: record.id,
     name: record.get('Name'),
     status: record.get('Status'),
-    decisionReason: record.get('Decision Reason'),
+    decisionReason: record.get('Decision Reason (to email)'),
   }
 }
