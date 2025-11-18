@@ -25,7 +25,6 @@ export default function CodeViewer({ repoUrl }: CodeViewerProps) {
       const data = await res.json()
       setFiles(data.files || [])
 
-      // Check if there's a README in the files
       const readmeFile = data.files?.find((f: any) =>
         f.name.toLowerCase() === 'readme.md' ||
         f.name.toLowerCase() === 'readme.txt' ||

@@ -17,8 +17,6 @@ export interface Submission {
   birthdate?: string
   screenshot?: string
   eventCode: string
-  flagged?: boolean
-  internalNotes?: string
 }
 
 export default function Home() {
@@ -35,7 +33,7 @@ export default function Home() {
   // Redirect to sign-in if not authenticated
   useEffect(() => {
     if (!user) {
-      const signInUrl = 'https://boba-reviewer-green.hackclub.dev/handler/sign-in?after_auth_return_to=%2Fhandler%2Fsign-up'
+      const signInUrl = process.env.NEXT_PUBLIC_SIGN_IN_URL || 'https://boba-reviewer-green.hackclub.dev/handler/sign-in?after_auth_return_to=%2Fhandler%2Fsign-up'
       window.location.href = signInUrl
     }
   }, [user, router])
@@ -47,7 +45,9 @@ export default function Home() {
   const fetchSubmissions = async () => {
     setLoading(true)
     try {
-      const viewName = currentView === 'workshop' ? 'Workshop Under Review' : 'Individual Under Review'
+      const view1Name = process.env.NEXT_PUBLIC_VIEW_1_NAME || 'Workshop Under Review'
+      const view2Name = process.env.NEXT_PUBLIC_VIEW_2_NAME || 'Individual Under Review'
+      const viewName = currentView === 'workshop' ? view1Name : view2Name
       const res = await fetch(`/api/submission/submissions?view=${encodeURIComponent(viewName)}`)
       const data = await res.json()
       setSubmissions(data.submissions || [])
@@ -112,32 +112,6 @@ export default function Home() {
     const currentIndex = submissions.findIndex(s => s.id === selectedSubmission.id)
     const nextIndex = (currentIndex + 1) % submissions.length
     setSelectedSubmission(submissions[nextIndex])
-  }
-
-  const handleFlagToggle = (id: string) => {
-    setSubmissions(prev =>
-      prev.map(sub =>
-        sub.id === id ? { ...sub, flagged: !sub.flagged } : sub
-      )
-    )
-    if (selectedSubmission?.id === id) {
-      setSelectedSubmission(prev =>
-        prev ? { ...prev, flagged: !prev.flagged } : null
-      )
-    }
-  }
-
-  const handleNotesUpdate = (id: string, notes: string) => {
-    setSubmissions(prev =>
-      prev.map(sub =>
-        sub.id === id ? { ...sub, internalNotes: notes } : sub
-      )
-    )
-    if (selectedSubmission?.id === id) {
-      setSelectedSubmission(prev =>
-        prev ? { ...prev, internalNotes: notes } : null
-      )
-    }
   }
 
   // Enhanced keyboard shortcuts
@@ -262,8 +236,6 @@ export default function Home() {
               submission={selectedSubmission}
               onStatusUpdate={handleStatusUpdate}
               onNext={handleNext}
-              onFlagToggle={handleFlagToggle}
-              onNotesUpdate={handleNotesUpdate}
             />
           </div>
         </div>

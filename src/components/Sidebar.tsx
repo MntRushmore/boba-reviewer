@@ -18,8 +18,8 @@ export default function Sidebar({ currentView, onViewChange, user, stats }: Side
   const [showMenu, setShowMenu] = useState(false)
 
   const navItems = [
-    { id: 'workshop', label: 'Workshop Under Review' },
-    { id: 'individual', label: 'Individual Under Review' },
+    { id: 'workshop', label: process.env.NEXT_PUBLIC_VIEW_1_NAME || 'Workshop Under Review' },
+    { id: 'individual', label: process.env.NEXT_PUBLIC_VIEW_2_NAME || 'Individual Under Review' },
   ]
 
   const getUserInitials = () => {
@@ -41,7 +41,8 @@ export default function Sidebar({ currentView, onViewChange, user, stats }: Side
   const handleSignOut = async () => {
     try {
       await user?.signOut()
-      window.location.href = 'https://boba-reviewer-green.hackclub.dev/handler/sign-in?after_auth_return_to=%2Fhandler%2Fsign-up'
+      const signInUrl = process.env.NEXT_PUBLIC_SIGN_IN_URL || 'https://boba-reviewer-green.hackclub.dev/handler/sign-in?after_auth_return_to=%2Fhandler%2Fsign-up'
+      window.location.href = signInUrl
     } catch (error) {
       console.error('Sign out error:', error)
     }
@@ -50,8 +51,12 @@ export default function Sidebar({ currentView, onViewChange, user, stats }: Side
   return (
     <div className="w-[280px] bg-sidebar border-r-2 border-border p-6 flex flex-col h-screen">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-text tracking-tight">Boba Drops</h1>
-        <p className="text-sm text-mutedText mt-1 font-medium">Submission Reviewer</p>
+        <h1 className="text-2xl font-bold text-text tracking-tight">
+          {process.env.NEXT_PUBLIC_APP_NAME || 'Boba Drops'}
+        </h1>
+        <p className="text-sm text-mutedText mt-1 font-medium">
+          {process.env.NEXT_PUBLIC_APP_SUBTITLE || 'Submission Reviewer'}
+        </p>
       </div>
 
       <nav className="space-y-1.5 mb-6">
