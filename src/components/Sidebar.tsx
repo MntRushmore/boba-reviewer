@@ -48,13 +48,13 @@ export default function Sidebar({ currentView, onViewChange, user, stats }: Side
   }
 
   return (
-    <div className="w-[280px] bg-sidebar border-r-2 border-border p-6 flex flex-col">
-      <div className="mb-10">
+    <div className="w-[280px] bg-sidebar border-r-2 border-border p-6 flex flex-col h-screen">
+      <div className="mb-8">
         <h1 className="text-2xl font-bold text-text tracking-tight">Boba Drops</h1>
         <p className="text-sm text-mutedText mt-1 font-medium">Submission Reviewer</p>
       </div>
 
-      <nav className="space-y-1.5">
+      <nav className="space-y-1.5 mb-6">
         {navItems.map((item) => (
           <button
             key={item.id}
@@ -72,7 +72,7 @@ export default function Sidebar({ currentView, onViewChange, user, stats }: Side
 
       {/* Statistics Dashboard */}
       {stats && (
-        <div className="bg-white border-2 border-border rounded-xl p-4 mt-6 shadow-sm">
+        <div className="bg-white border-2 border-border rounded-xl p-4 shadow-sm">
           <h3 className="text-xs font-bold text-mutedText uppercase tracking-wide mb-3">Your Stats</h3>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
@@ -96,9 +96,12 @@ export default function Sidebar({ currentView, onViewChange, user, stats }: Side
         </div>
       )}
 
-      <div className="relative">
+      {/* Spacer to push account to bottom */}
+      <div className="flex-1"></div>
+
+      <div className="relative mt-4">
         <div
-          className="bg-white border-2 border-border rounded-xl p-4 mt-auto shadow-sm cursor-pointer hover:shadow-md transition-shadow"
+          className="bg-white border-2 border-border rounded-xl p-4 shadow-sm cursor-pointer hover:shadow-md transition-shadow"
           onClick={() => setShowMenu(!showMenu)}
         >
           <div className="flex items-center gap-3">

@@ -103,7 +103,7 @@ export default function InspectorPanel({
 
       {/* Internal Notes Section */}
       {showNotes && (
-        <div className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-4 mb-4">
+        <div className="bg-yellow-100 border-2 border-dashed border-yellow-600 rounded-xl p-4 mb-4">
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-sm font-bold text-yellow-900">Internal Notes (not sent to submitter)</h3>
             <button
@@ -120,7 +120,7 @@ export default function InspectorPanel({
             value={internalNotes}
             onChange={(e) => setInternalNotes(e.target.value)}
             placeholder="Add private notes for yourself or other reviewers..."
-            className="w-full h-20 p-2 border-2 border-yellow-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500 resize-none text-sm"
+            className="w-full h-20 p-3 border-2 border-dashed border-yellow-500 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 resize-none text-sm"
           />
         </div>
       )}
