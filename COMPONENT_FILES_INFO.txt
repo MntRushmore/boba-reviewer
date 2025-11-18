@@ -1,0 +1,22 @@
+The remaining component files are too large for this bash script.
+Please copy them from the artifact "boba_complete_files" above.
+
+Files needed in src/components/:
+- Sidebar.tsx
+- SubmissionList.tsx
+- SubmissionCard.tsx
+- InspectorPanel.tsx
+- PreviewFrame.tsx
+- CodeViewer.tsx
+
+Files needed in src/lib/:
+- airtable.ts
+- github.ts
+
+Files needed in src/pages/api/:
+- submissions.ts
+- submission/[id].ts
+- update-status.ts
+- github-files.ts
+
+You can find all these files in the complete artifact above.
