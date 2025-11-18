@@ -1,20 +1,24 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { updateSubmissionStatus } from '@/lib/airtable'
+import { updateSubmission } from '@/lib/airtable'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { id, status, decisionReason } = req.body
-
-  if (!id || !status || !decisionReason) {
-    return res.status(400).json({ error: 'Missing required fields' })
-  }
-
   try {
-    await updateSubmissionStatus(id, status, decisionReason)
-    res.status(200).json({ success: true })
+    const { id, status, reason } = req.body
+
+    if (!id || !status) {
+      return res.status(400).json({ error: 'Missing required fields' })
+    }
+
+    const record = await updateSubmission(id, status, reason || '')
+    
+    res.status(200).json({ success: true, record })
   } catch (error) {
     console.error('Error updating submission:', error)
     res.status(500).json({ error: 'Failed to update submission' })
